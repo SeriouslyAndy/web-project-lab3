@@ -14,6 +14,8 @@ attendance only with a valid, unexpired code or QR code.
 - `attendance_records`: successful attendance confirmations.
 - `attendance_code_attempts`: accepted and rejected code/QR submissions.
 - `audit_logs`: immutable record of privileged changes.
+- `absence_requests`: student-submitted requests for an excused absence.
+- `notifications`: cancellation and system notifications for users.
 
 ## Attendance confirmation
 
@@ -74,6 +76,9 @@ in an audit log.
 
 - Collect location only if the feature is enabled and clearly disclosed.
   Minimize precision and retention, and restrict access to authorized staff.
+- Treat client coordinates as untrusted input. Compare them with the session
+  location on the server using a radius calculation; do not expose the
+  professor's exact coordinates to students.
 - Encrypt data in transit and at rest. Do not log passwords, raw codes, QR
   tokens, or sensitive documents.
 - Treat device and IP data as security metadata with a retention policy.
@@ -97,6 +102,8 @@ in an audit log.
 `users`, `student_profiles`, `professor_profiles`, `departments`, `courses`,
 `course_sections`, `enrollments`, `class_meetings`, `attendance_sessions`,
 `attendance_records`, `attendance_code_attempts`, and `audit_logs`.
+`absence_requests` and `notifications` support excused absences and
+professor-cancellation alerts.
 
 The PlantUML files in this directory can be rendered with any PlantUML-compatible
 editor or extension.

@@ -90,6 +90,9 @@ entity attendance_sessions {
   status : enum
   code_hash : text
   code_version : integer
+  location_latitude : decimal
+  location_longitude : decimal
+  allowed_radius_meters : integer
   qr_enabled : boolean
   closed_at : timestamptz
 }
@@ -102,6 +105,8 @@ entity attendance_records {
   status : enum
   confirmation_method : enum
   confirmed_at : timestamptz
+  latitude : decimal
+  longitude : decimal
   minutes_late : integer
   --
   UNIQUE(attendance_session_id, student_id)
@@ -129,6 +134,28 @@ entity audit_logs {
   created_at : timestamptz
 }
 
+entity absence_requests {
+  * id : uuid
+  --
+  student_id : uuid <<FK>>
+  section_id : uuid <<FK>>
+  attendance_session_id : uuid <<FK>>
+  reason : text
+  attachment_url : text
+  status : enum
+  created_at : timestamptz
+}
+
+entity notifications {
+  * id : uuid
+  --
+  user_id : uuid <<FK>>
+  title : varchar
+  message : text
+  read_at : timestamptz
+  created_at : timestamptz
+}
+
 users ||--o| student_profiles
 users ||--o| professor_profiles
 departments ||--o{ student_profiles
@@ -146,6 +173,10 @@ users ||--o{ attendance_records : confirms
 attendance_sessions ||--o{ attendance_code_attempts
 users ||--o{ attendance_code_attempts : submits
 users ||--o{ audit_logs : creates
+users ||--o{ absence_requests : submits
+course_sections ||--o{ absence_requests
+attendance_sessions ||--o{ absence_requests
+users ||--o{ notifications : receives
 
 note right of attendance_sessions
   Store only a hash of the
