@@ -1,0 +1,57 @@
+/* Bare layout only, so the pages are usable before the real design exists. */
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0 auto;
+  padding: 0 16px 32px;
+  max-width: 900px;
+}
+header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-bottom: 1px solid #ccc;
+}
+header nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+#flash {
+  margin: 12px 0;
+  padding: 8px;
+  border: 1px solid #999;
+}
+#flash.error {
+  border-color: #c00;
+  color: #c00;
+}
+form,
+fieldset {
+  display: grid;
+  gap: 8px;
+  max-width: 420px;
+}
+label {
+  display: grid;
+  gap: 2px;
+}
+table {
+  border-collapse: collapse;
+}
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  text-align: left;
+}
+.mono {
+  font-family: ui-monospace, monospace;
+  word-break: break-all;
+}
+.code-display {
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+}

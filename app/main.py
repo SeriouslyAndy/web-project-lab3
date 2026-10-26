@@ -1,10 +1,12 @@
 from datetime import date, datetime, timedelta, timezone
 from math import asin, cos, radians, sin, sqrt
+from pathlib import Path
 from typing import NoReturn
 
 import jwt
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -610,3 +612,7 @@ def class_statistics(
         attendance_percentage=round(len(records) * 100 / total_possible, 2) if total_possible else 0,
         by_session=by_session,
     )
+
+
+# The browser UI is served from the same origin as the API, so it needs no CORS setup.
+app.mount("/ui", StaticFiles(directory=Path(__file__).parent.parent / "ui", html=True), name="ui")
